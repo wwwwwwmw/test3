@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using test3.Models;
+using mn.Models;
 using System.Collections.Generic;
 using System.Reflection.Emit;
-using mn.Models;
 
 namespace mn.Data
 {
@@ -13,9 +12,15 @@ namespace mn.Data
 
         }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Danhsach> Danhsaches { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Category>().HasData(
+            new Category { Id = 1, Name = "Thanh Viet", PhoneNumber = 0123456789, UniversityId = 1 }
+            );
+            modelBuilder.Entity<Danhsach>().HasData(
+            new Danhsach { Id = 1, University = "Dai hoc bach khoa ha noi" }
+            );
         }
     }
 }

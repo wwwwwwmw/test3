@@ -11,8 +11,8 @@ using mn.Data;
 namespace test3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240327052111_addddddd")]
-    partial class addddddd
+    [Migration("20240403060947_add")]
+    partial class add
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,31 @@ namespace test3.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Danhsach", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("University")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Danhsaches");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            University = "Dai hoc bach khoa ha noi"
+                        });
+                });
 
             modelBuilder.Entity("mn.Models.Category", b =>
                 {
@@ -40,10 +65,6 @@ namespace test3.Migrations
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("int");
 
-                    b.Property<string>("University")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
@@ -53,22 +74,7 @@ namespace test3.Migrations
                         {
                             Id = 1,
                             Name = "Thanh Viet",
-                            PhoneNumber = 123456789,
-                            University = "Dai hoc mo"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Thien An",
-                            PhoneNumber = 123456789,
-                            University = "Dai hoc 1"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Cong Dat",
-                            PhoneNumber = 123456789,
-                            University = "Dai hoc 2"
+                            PhoneNumber = 123456789
                         });
                 });
 #pragma warning restore 612, 618

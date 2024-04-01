@@ -1,18 +1,15 @@
 ﻿@using mn.Models
 @model Category
-@{
-	var provinces = new List<string> {
-		"Đại học Tài Nguyên và Môi Trường","Đại học Mở","Đại học Sư Phạm","Đại học Kinh Tế","Đại học Bách Khoa"
-	};
-}
-<form method="post" action="@Url.Action("Edit", "Category")">
-	<input asp-for="Id" hidden />
-	<div class="border p-3 mt-4">
-		<div class="row pb-2">
-			<h2 class="text-primary">Chỉnh sửa sinh viên</h2>
-			<hr />
+
+<form method="post">
+	<div class="container">
+		<div class="row pt-4 pb-3">
+			<div class="col-6">
+				<h2 class="text-primary">
+					Chỉnh sửa thông tin sinh viên
+				</h2>
+			</div>
 		</div>
-		@* <div asp-validation-summary="All"></div> *@
 		<div class="mb-3 row p-1">
 			<label asp-for="Name" class="p-0"></label>
 			<input asp-for="Name" type="text" class="form-control" />
@@ -24,14 +21,18 @@
 			<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 		</div>
 		<div class="mb-3 row p-1">
-			<label asp-for="University" class="p-0"></label>
-			<select id="University" name="University" class="form-control" style="width: 100%">
-				<option value="">Chọn địa chỉ</option>
-				@foreach (var province in provinces)
+			<label asp-for="UniversityId" class="control-label"></label>
+			<select asp-for="UniversityId" class="form-control" id="cityDropdown">
+				<option value="">Chọn trường</option>
+				@if (ViewBag.DanhsachList != null) 
 				{
-					<option value="@province">@province</option>
+					foreach (var danhsach in ViewBag.DanhsachList)
+					{
+						<option value="@danhsach.Value">@danhsach.Text</option>
+					}
 				}
 			</select>
+			<span asp-validation-for="UniversityId" class="text-danger"></span>
 		</div>
 		<div class="row">
 			<div class="col-6 col-md-3">
@@ -45,22 +46,15 @@
 		</div>
 	</div>
 </form>
- @section Scripts {
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+@section Scripts {
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
 	<script>
 		$(document).ready(function () {
-			var selectAddress = $('#University');
-
-			// Kích hoạt Select2 cho dropdown địa chỉ
-			selectAddress.select2({
-				dropdownAutoWidth: true,
-				width: '100%',
-				placeholder: "Chọn một địa chỉ",
+			$('#cityDropdown').select2({
+				placeholder: '-- Chọn trường --',
 				allowClear: true
 			});
 		});
-	</script> 
-	}
+	</script>
+}
