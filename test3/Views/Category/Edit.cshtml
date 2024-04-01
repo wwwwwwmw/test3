@@ -1,0 +1,66 @@
+﻿@using mn.Models
+@model Category
+@{
+	var provinces = new List<string> {
+		"Đại học Tài Nguyên và Môi Trường","Đại học Mở","Đại học Sư Phạm","Đại học Kinh Tế","Đại học Bách Khoa"
+	};
+}
+<form method="post" action="@Url.Action("Edit", "Category")">
+	<input asp-for="Id" hidden />
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">Chỉnh sửa sinh viên</h2>
+			<hr />
+		</div>
+		@* <div asp-validation-summary="All"></div> *@
+		<div class="mb-3 row p-1">
+			<label asp-for="Name" class="p-0"></label>
+			<input asp-for="Name" type="text" class="form-control" />
+			<span asp-validation-for="Name" class="text-danger"></span>
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="PhoneNumber" class="p-0"></label>
+			<input asp-for="PhoneNumber" type="text" class="form-control" />
+			<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="University" class="p-0"></label>
+			<select id="University" name="University" class="form-control" style="width: 100%">
+				<option value="">Chọn địa chỉ</option>
+				@foreach (var province in provinces)
+				{
+					<option value="@province">@province</option>
+				}
+			</select>
+		</div>
+		<div class="row">
+			<div class="col-6 col-md-3">
+				<button type="submit" class="btn btn-primary form-control">Cập nhật</button>
+			</div>
+			<div class="col-6 col-md-3">
+				<a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary form-control">
+					Trở về
+				</a>
+			</div>
+		</div>
+	</div>
+</form>
+ @section Scripts {
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+	<script>
+		$(document).ready(function () {
+			var selectAddress = $('#University');
+
+			// Kích hoạt Select2 cho dropdown địa chỉ
+			selectAddress.select2({
+				dropdownAutoWidth: true,
+				width: '100%',
+				placeholder: "Chọn một địa chỉ",
+				allowClear: true
+			});
+		});
+	</script> 
+	}
